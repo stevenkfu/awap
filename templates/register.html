@@ -7,7 +7,7 @@
   <form class="well" method="post">
     {% csrf_token %}
     <div class="form-group">
-      <label for="{{ form.name.id_for_label }}">Team Name</label> 
+      <label for="{{ form.name.id_for_label }}">Team Name (You may not change your team name once you register)</label> 
       {{ form.name }}
       {{ form.name.errors }}
     </div>
