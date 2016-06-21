@@ -1,6 +1,7 @@
 from datetime import datetime
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import check_password, make_password
 from web.forms import TeamForm, ManageTeamForm
@@ -16,7 +17,8 @@ def index(request):
             request.session['team'] = team.name
             return HttpResponseRedirect('/')
         else:
-            return HttpResponseRedirect('/register')
+            messages.error(request, 'Invalid team name or password')
+            return render(request, 'index.html')
     else:
         return render(request, 'index.html')
 
@@ -30,6 +32,7 @@ def register(request):
             team.backend = 'web.backends.TeamAuthBackend'
             login(request, team)
             request.session['team'] = team.name
+            messages.success(request, 'Team {} successfully registered'.format(team.name))
             return HttpResponseRedirect('/')
     elif request.method == 'POST' and 'signin' in request.POST:
         name = request.POST.get('name', None)
@@ -40,6 +43,7 @@ def register(request):
             request.session['team'] = team.name
             return HttpResponseRedirect('/')
         else:
+            messages.error(request, 'Invalid team name or password')
             return HttpResponseRedirect('/register')
     else:
         form = TeamForm()
