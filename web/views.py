@@ -27,7 +27,10 @@ def register(request):
             team = form.save(commit=False)
             team.password = make_password(form.cleaned_data['password'])
             team.save()
-            return HttpResponseRedirect('/') # TODO: Thanks for registration page
+            team.backend = 'web.backends.TeamAuthBackend'
+            login(request, team)
+            request.session['team'] = team.name
+            return HttpResponseRedirect('/')
     elif request.method == 'POST' and 'signin' in request.POST:
         name = request.POST.get('name', None)
         password = request.POST.get('password', None)
@@ -72,7 +75,7 @@ def manage(request):
                 team.size_4 = form.cleaned_data['size_4']
                 team.diet = form.cleaned_data['diet']
                 team.save()
-                return HttpResponseRedirect('/manage') # TODO: Thanks for registration page
+                return HttpResponseRedirect('/manage')
         else:
             form = ManageTeamForm(instance=team)
     return render(request, 'manage.html', {'form': form})
