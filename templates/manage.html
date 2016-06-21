@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if request.session.team %}
+<div class="container">
+    <br/> 
+    <form class="well" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.name.id_for_label }}">Team Name</label> 
+            {{ form.name }}
+            {{ form.name.errors }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.password.id_for_label }}">Team Password</label>
+            {{ form.password }}
+            {{ form.password.errors }}
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="{{ form.member_1.id_for_label }}">Team Member</label>
+                {{ form.member_1 }}
+                {{ form.member_1.errors }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.email_1.id_for_label }}">Email</label>
+                {{ form.email_1 }}
+                {{ form.email_1.errors }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.size_1.id_for_label }}">Shirt Size (only if at CMU)</label>
+                {{ form.size_1 }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="{{ form.member_2.id_for_label }}">Team Member</label>
+                {{ form.member_2 }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.email_2.id_for_label }}">Email</label>
+                {{ form.email_2 }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.size_2.id_for_label }}">Shirt Size (only if at CMU)</label>
+                {{ form.size_2 }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="{{ form.member_3.id_for_label }}">Team Member</label>
+                {{ form.member_3 }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.email_3.id_for_label }}">Email</label>
+                {{ form.email_3 }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.size_3.id_for_label }}">Shirt Size (only if at CMU)</label>
+                {{ form.size_3 }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="{{ form.member_4.id_for_label }}">Team Member</label>
+                {{ form.member_4 }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.email_4.id_for_label }}">Email</label>
+                {{ form.email_4 }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.size_4.id_for_label }}">Shirt Size (only if at CMU)</label>
+                {{ form.size_4 }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="{{ form.diet.id_for_label }}">Dietary Restrictions (only if at CMU)</label>
+            {{ form.diet }}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+{% endif %}
+
+{% endblock %}

@@ -35,3 +35,11 @@ class TeamForm(forms.ModelForm):
     size_3 = forms.CharField(widget=forms.Select(choices=SHIRT_SIZES, attrs={'class': 'form-control',}), required=False)
     size_4 = forms.CharField(widget=forms.Select(choices=SHIRT_SIZES, attrs={'class': 'form-control',}), required=False)
     diet = forms.CharField(max_length=1000, widget=forms.Textarea(attrs={'class': 'form-control'}), required=False)
+
+
+class ManageTeamForm(TeamForm):
+
+    name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Team Name',
+        'readonly': 'readonly'}))

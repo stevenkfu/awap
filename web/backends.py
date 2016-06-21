@@ -7,7 +7,6 @@ class TeamAuthBackend(object):
         try:
             team = Team.objects.get(name=name)
             if check_password(password, team.password):
-                print("LOG HIM IN")
                 return team
             else:
                 return None
