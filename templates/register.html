@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="../../favicon.ico">
+
+        <title>Algorithms with a Purpose</title>
+
+        {% load staticfiles %}
+        <!-- Bootstrap core CSS -->
+        <link href={% static "css/bootstrap.min.css" %} rel="stylesheet">
+
+        <!-- Custom styles for this template -->
+        <link href={% static "css/jumbotron.css" %} rel="stylesheet">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+            <script src={% static "js/bootstrap.min.js" %}></script>
+        </head>
+
+        <body>
+
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Space Base Race</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <form class="navbar-form navbar-right">
+                        <div class="form-group">
+                            <input type="text" placeholder="Team Name" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" placeholder="Password" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-success">Sign in</button>
+                    </form>
+                </div><!--/.navbar-collapse -->
+            </div>
+            </nav>
+
+
+            <div class="container">
+                <!-- Example row of columns -->
+                <br/> 
+                <form class="well" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="{{ form.name.id_for_label }}">Team Name</label> 
+                        {{ form.name }}
+                        {{ form.name.errors }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.password.id_for_label }}">Team Password</label>
+                        {{ form.password }}
+                        {{ form.password.errors }}
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="{{ form.member_1.id_for_label }}">Team Member</label>
+                            {{ form.member_1 }}
+                            {{ form.member_1.errors }}
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="{{ form.email_1.id_for_label }}">Email</label>
+                            {{ form.email_1 }}
+                            {{ form.email_1.errors }}
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="{{ form.size_1.id_for_label }}">Shirt Size (only if at CMU)</label>
+                            {{ form.size_1 }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="{{ form.member_2.id_for_label }}">Team Member</label>
+                            {{ form.member_2 }}
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="{{ form.email_2.id_for_label }}">Email</label>
+                            {{ form.email_2 }}
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="{{ form.size_2.id_for_label }}">Shirt Size (only if at CMU)</label>
+                            {{ form.size_2 }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="{{ form.member_3.id_for_label }}">Team Member</label>
+                            {{ form.member_3 }}
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="{{ form.email_3.id_for_label }}">Email</label>
+                            {{ form.email_3 }}
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="{{ form.size_3.id_for_label }}">Shirt Size (only if at CMU)</label>
+                            {{ form.size_3 }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="{{ form.member_4.id_for_label }}">Team Member</label>
+                            {{ form.member_4 }}
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="{{ form.email_4.id_for_label }}">Email</label>
+                            {{ form.email_4 }}
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="{{ form.size_4.id_for_label }}">Shirt Size (only if at CMU)</label>
+                            {{ form.size_4 }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.diet.id_for_label }}">Dietary Restrictions (only if at CMU)</label>
+                        {{ form.diet }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+
+                <hr>
+
+                <footer>
+                <p>&copy; 2015 Company, Inc.</p>
+                </footer>
+            </div> <!-- /container -->
+
+
+            <!-- Bootstrap core JavaScript
+            ================================================== -->
+            <!-- Placed at the end of the document so the pages load faster -->
+        </body>
+    </html>
+
+
+
+
+
+
+
+
+
