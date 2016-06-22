@@ -9,7 +9,7 @@ class TeamForm(forms.ModelForm):
                   'member_1', 'member_2', 'member_3', 'member_4',
                   'email_1', 'email_2', 'email_3', 'email_4',
                   'size_1', 'size_2', 'size_3', 'size_4', 'diet']
-        exclude = ['score', 'code', 'last_login']
+        exclude = ['code', 'last_login', 'score_1', 'score_2', 'score_3', 'score_4', 'score_5', 'score_6', 'score_7', 'score_8', 'score_9', 'score_10']
 
     name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={
                                         'class': 'form-control',
@@ -40,6 +40,6 @@ class TeamForm(forms.ModelForm):
 class ManageTeamForm(TeamForm):
 
     name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={
-        'class': 'form-control',
-        'placeholder': 'Team Name',
-        'readonly': 'readonly'}))
+            'class': 'form-control',
+            'placeholder': 'Team Name',
+            'readonly': 'readonly'}))

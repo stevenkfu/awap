@@ -4,8 +4,11 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import check_password, make_password
+from django_tables2 import RequestConfig
+
 from web.forms import TeamForm, ManageTeamForm
 from web.models import Team
+from web.tables import TeamScoreboard
 
 def index(request):
     if request.method == 'POST':
@@ -23,6 +26,9 @@ def index(request):
         return render(request, 'index.html')
 
 def register(request):
+    if request.session.get('team', None) is not None:
+        messages.error(request, 'Please delete your team to create a new team')
+        return HttpResponseRedirect('/manage')
     if request.method == 'POST' and 'register' in request.POST:
         form = TeamForm(request.POST)
         if form.is_valid():
@@ -80,7 +86,7 @@ def manage(request):
                 team.diet = form.cleaned_data['diet']
                 team.save()
                 return HttpResponseRedirect('/manage')
-        elif request.method == 'POST':
+        elif request.method == 'POST' and 'delete' in request.POST:
             logout(request)
             request.session['team'] = None
             team.delete()
@@ -89,3 +95,11 @@ def manage(request):
         else:
             form = ManageTeamForm(instance=team)
     return render(request, 'manage.html', {'form': form})
+
+def about(request):
+    return render(request, 'about.html')
+
+def scoreboard(request):
+    table = TeamScoreboard(Team.objects.all())
+    RequestConfig(request).configure(table)
+    return render(request, 'scoreboard.html', {'table': table})
