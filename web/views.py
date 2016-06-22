@@ -60,7 +60,7 @@ def manage(request):
     else:
         team = Team.objects.get(name = request.session.get('team'))
         form = ManageTeamForm(instance=team)
-        if request.method == 'POST':
+        if request.method == 'POST' and 'submit' in request.POST:
             form = ManageTeamForm(request.POST, instance=team)
             if form.is_valid():
                 team.name = form.cleaned_data['name']
@@ -80,6 +80,11 @@ def manage(request):
                 team.diet = form.cleaned_data['diet']
                 team.save()
                 return HttpResponseRedirect('/manage')
+        elif request.method == 'POST':
+            logout(request)
+            team.delete()
+            messages.success(request, 'Your team has been deleted')
+            return HttpResponseRedirect('/')
         else:
             form = ManageTeamForm(instance=team)
     return render(request, 'manage.html', {'form': form})
