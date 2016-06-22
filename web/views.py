@@ -82,6 +82,7 @@ def manage(request):
                 return HttpResponseRedirect('/manage')
         elif request.method == 'POST':
             logout(request)
+            request.session['team'] = None
             team.delete()
             messages.success(request, 'Your team has been deleted')
             return HttpResponseRedirect('/')
