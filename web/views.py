@@ -106,15 +106,48 @@ def manage(request):
     return render(request, 'manage.html', {'form': form})
 
 def about(request):
+    if request.method == 'POST' and 'signin' in request.POST:
+        name = request.POST.get('name', None)
+        password = request.POST.get('password', None)
+        team = authenticate(name=name, password=password)
+        if team is not None:
+            login(request, team)
+            request.session['team'] = team.name
+            return HttpResponseRedirect('/about')
+        else:
+            messages.error(request, 'Invalid team name or password')
+            return HttpResponseRedirect('/about')
     return render(request, 'about.html')
 
 def scoreboard(request):
+    if request.method == 'POST' and 'signin' in request.POST:
+        name = request.POST.get('name', None)
+        password = request.POST.get('password', None)
+        team = authenticate(name=name, password=password)
+        if team is not None:
+            login(request, team)
+            request.session['team'] = team.name
+            return HttpResponseRedirect('/scoreboard')
+        else:
+            messages.error(request, 'Invalid team name or password')
+            return HttpResponseRedirect('/scoreboard')
     table = TeamScoreboard(Team.objects.all())
     RequestConfig(request).configure(table)
     return render(request, 'scoreboard.html', {'table': table})
 
 def admin_login(request):
-    if request.method == 'POST':
+    if request.method == 'POST' and 'signin' in request.POST:
+        name = request.POST.get('name', None)
+        password = request.POST.get('password', None)
+        team = authenticate(name=name, password=password)
+        if team is not None:
+            login(request, team)
+            request.session['team'] = team.name
+            return HttpResponseRedirect('/admin_login')
+        else:
+            messages.error(request, 'Invalid team name or password')
+            return HttpResponseRedirect('/admin_login')    
+    elif request.method == 'POST':
         form = AdminLoginForm(request.POST)
         if form.is_valid():
             print(form.cleaned_data['password'])
@@ -131,6 +164,17 @@ def admin_login(request):
 def admin(request):
     if not request.session.get('admin', None):
         return HttpResponseRedirect('/')
+    elif request.method == 'POST' and 'signin' in request.POST:
+        name = request.POST.get('name', None)
+        password = request.POST.get('password', None)
+        team = authenticate(name=name, password=password)
+        if team is not None:
+            login(request, team)
+            request.session['team'] = team.name
+            return HttpResponseRedirect('/scoreboard')
+        else:
+            messages.error(request, 'Invalid team name or password')
+            return HttpResponseRedirect('/scoreboard')
     else:
         fields = ('name', 'score_1', 'score_2', 'score_3', 'score_4', 'score_5', 'score_6', 'score_7', 'score_8', 'score_9', 'score_10')
         AdminManageTeamForm = modelformset_factory(Team, fields=fields)
