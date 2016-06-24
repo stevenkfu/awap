@@ -1,14 +1,23 @@
+import random
+import string
 from datetime import datetime
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import check_password, make_password
+from django.forms import modelformset_factory
 from django_tables2 import RequestConfig
 
-from web.forms import TeamForm, ManageTeamForm
+from web.forms import TeamForm, ManageTeamForm, AdminLoginForm
 from web.models import Team
 from web.tables import TeamScoreboard
+
+
+
+chars = string.ascii_lowercase + string.digits
+ADMIN_PASS = ''.join((random.choice(chars)) for x in range(16))
+print(ADMIN_PASS)
 
 def index(request):
     if request.method == 'POST':
@@ -103,3 +112,35 @@ def scoreboard(request):
     table = TeamScoreboard(Team.objects.all())
     RequestConfig(request).configure(table)
     return render(request, 'scoreboard.html', {'table': table})
+
+def admin_login(request):
+    if request.method == 'POST':
+        form = AdminLoginForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data['password'])
+            if form.cleaned_data['password'] == ADMIN_PASS:
+                request.session['admin'] = True
+                return HttpResponseRedirect('/admin')
+            else:
+                return HttpResponseRedirect('/')
+    else:
+        form = AdminLoginForm()
+    return render(request, 'admin_login.html', {'form': form})
+
+
+def admin(request):
+    if not request.session.get('admin', None):
+        return HttpResponseRedirect('/')
+    else:
+        fields = ('name', 'score_1', 'score_2', 'score_3', 'score_4', 'score_5', 'score_6', 'score_7', 'score_8', 'score_9', 'score_10')
+        AdminManageTeamForm = modelformset_factory(Team, fields=fields)
+        if request.method == 'POST' and 'update' in request.POST:
+            formset = AdminManageTeamForm(request.POST)
+            if formset.is_valid():
+                formset.save()
+        elif request.method == 'POST' and 'logout' in request.POST:
+            request.session['admin'] = False
+            return HttpResponseRedirect('/')
+        else:
+            formset = AdminManageTeamForm()
+        return render(request, 'admin.html', {'formset': formset})

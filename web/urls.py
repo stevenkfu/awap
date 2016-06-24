@@ -9,4 +9,6 @@ urlpatterns = [
     url(r'^manage$', views.manage),
     url(r'^about$', views.about),
     url(r'^scoreboard$', views.scoreboard),
+    url(r'^admin_login$', views.admin_login),
+    url(r'^admin$', views.admin),
     ]

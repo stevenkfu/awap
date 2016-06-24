@@ -14,6 +14,7 @@ class TeamScoreboard(tables.Table):
     score_8 = tables.Column(verbose_name='Round 8')
     score_9 = tables.Column(verbose_name='Round 9')
     score_10 = tables.Column(verbose_name='Round 10')
+    total_score = tables.Column(verbose_name='Total')
 
 
     class Meta:

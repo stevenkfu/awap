@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
+
 class Team(models.Model):
 
     name = models.CharField(max_length=100, unique=True)
@@ -15,6 +16,7 @@ class Team(models.Model):
     score_8 = models.FloatField(default=0.0)
     score_9 = models.FloatField(default=0.0)
     score_10 = models.FloatField(default=0.0)
+    total_score = models.FloatField(default=0.0)
     member_1 = models.CharField(max_length=100)
     member_2 = models.CharField(max_length=100, blank=True)
     member_3 = models.CharField(max_length=100, blank=True)

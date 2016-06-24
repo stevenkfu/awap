@@ -43,3 +43,8 @@ class ManageTeamForm(TeamForm):
             'class': 'form-control',
             'placeholder': 'Team Name',
             'readonly': 'readonly'}))
+
+
+class AdminLoginForm(forms.Form):
+
+    password = forms.CharField(max_length=100, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
