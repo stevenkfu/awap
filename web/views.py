@@ -131,11 +131,12 @@ def scoreboard(request):
         else:
             messages.error(request, 'Invalid team name or password')
             return HttpResponseRedirect('/scoreboard')
-    table = TeamScoreboard(Team.objects.all())
+    table = TeamScoreboard(Team.objects.all(), order_by='total_score')
     RequestConfig(request).configure(table)
     return render(request, 'scoreboard.html', {'table': table})
 
 def admin_login(request):
+    return HttpResponseRedirect('/')
     if request.method == 'POST' and 'signin' in request.POST:
         name = request.POST.get('name', None)
         password = request.POST.get('password', None)
@@ -146,7 +147,7 @@ def admin_login(request):
             return HttpResponseRedirect('/admin_login')
         else:
             messages.error(request, 'Invalid team name or password')
-            return HttpResponseRedirect('/admin_login')    
+            return HttpResponseRedirect('/admin_login')
     elif request.method == 'POST':
         form = AdminLoginForm(request.POST)
         if form.is_valid():
@@ -162,6 +163,7 @@ def admin_login(request):
 
 
 def admin(request):
+    return HttpResponseRedirect('/')
     if not request.session.get('admin', None):
         return HttpResponseRedirect('/')
     elif request.method == 'POST' and 'signin' in request.POST:
